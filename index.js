@@ -27,7 +27,6 @@ function runBrowserify (entry) {
   ].join(' ')
   console.log('running: ' + cmd)
   var proc = spawn(cmd)
-  proc.stdout.pipe(process.stdout)
   proc.on('close', function () {
     console.log('finished writing: ' + dest)
     lrServer.changed({

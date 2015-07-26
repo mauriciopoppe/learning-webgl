@@ -26,7 +26,7 @@ Then start an static server + tiny-lr server
 npm start
 ```
 
-Open `http://localhost:9696` and that's it
+Open `http://localhost:9696` and navigate to any of the examples located in `book`
 
 ## License
 
