@@ -21,13 +21,15 @@ var FSHADER_SOURCE = `
   }
 `
 
+// initialize shaders
 var program = twgl.createProgramFromSources(gl, [VSHADER_SOURCE, FSHADER_SOURCE])
 gl.useProgram(program)
 
+// clear
 gl.clearColor(0.0, 0.0, 0.0, 1.0)
 gl.clear(gl.COLOR_BUFFER_BIT)
 
 // execute the vertex shader in the mode of POINTS
 // from the vertex 0 using 1 vertex
-// mode, first, count
+// mode=gl.POINTS, first=0, count=1
 gl.drawArrays(gl.POINTS, 0, 1)
