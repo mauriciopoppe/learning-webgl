@@ -31,6 +31,7 @@ Available type of variables:
 
 - `attributes` data that differs per vertex
 - `uniform` data that is the same in each vertex
+- `varying` data sent from this shader down the pipeline
 
 ## Fragment shader
 
@@ -39,7 +40,9 @@ The fragment shader modifies the properties of a fragment (a pixel with addition
 Built in variables available:
 
 - `gl_FragColor {vec4}` (rgba)
+- `gl_FragCoord {vec4}` coordinates of the pixel in canvas space
 
 Available type of variables:
 
 - `uniform` data that is the same in each vertex
+- `varying` data received from the vertex shader

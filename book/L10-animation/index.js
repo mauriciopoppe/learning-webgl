@@ -6,9 +6,9 @@ var gl = twgl.getWebGLContext(canvas)
 
 var VSHADER_SOURCE = `
 attribute vec4 a_Position;
-uniform mat4 u_TransformMatrix;
+uniform mat4 u_ModelMatrix;
 void main() {
-  gl_Position = u_TransformMatrix * a_Position;
+  gl_Position = u_ModelMatrix * a_Position;
 }
 `
 
@@ -20,9 +20,9 @@ void main() {
 `
 function initVertexBuffers (gl) {
   var vertices = new Float32Array([
-    -0.5, -0.5,
-    0.5, -0.5,
-    0, 0.5
+    -0.3, -0.3,
+    0.3, -0.3,
+    0, 0.3
   ])
   var n = 3
 
@@ -53,18 +53,44 @@ function initVertexBuffers (gl) {
 var program = gl.program = twgl.createProgramFromSources(gl, [VSHADER_SOURCE, FSHADER_SOURCE])
 gl.useProgram(program)
 
-// draw
-gl.clearColor(0.0, 0.0, 0.0, 1.0)
-gl.clear(gl.COLOR_BUFFER_BIT)
-var n = initVertexBuffers(gl)
+var currentAngle = 0
+var angleStep = 45
 
-var mat = mat4.create()
-mat4.rotateZ(mat, mat, Math.PI / 2)
-mat4.translate(mat, mat, [0.5, 0.5, 0.5])
+function draw () {
+  // draw
+  gl.clearColor(0.0, 0.0, 0.0, 1.0)
+  gl.clear(gl.COLOR_BUFFER_BIT)
+  var n = initVertexBuffers(gl)
 
-// translation
-var uTransformMatrix = gl.getUniformLocation(gl.program, 'u_TransformMatrix')
-// location, transpose? (must be false), array in column major order
-gl.uniformMatrix4fv(uTransformMatrix, false, mat)
+  // transformation
+  // - translate
+  // - rotate
+  var mat = mat4.create()
+  mat4.rotateZ(mat, mat, currentAngle * Math.PI / 180)
+  mat4.translate(mat, mat, [0.5, 0.0, 0.0])
 
-gl.drawArrays(gl.TRIANGLES, 0, n)
+  // translation
+  var uModelMatrix = gl.getUniformLocation(gl.program, 'u_ModelMatrix')
+  // location, transpose? (must be false), array in column major order
+  gl.uniformMatrix4fv(uModelMatrix, false, mat)
+
+  gl.drawArrays(gl.TRIANGLES, 0, n)
+}
+
+function animate (angle) {
+  var now = Date.now()
+  var elapsed = now - animate.last
+  animate.last = now
+  // move angleStep units every second
+  var newAngle = angle + angleStep * elapsed / 1000.0
+  newAngle %= 360
+  return newAngle
+}
+animate.last = Date.now()
+
+function tick () {
+  window.requestAnimationFrame(tick)
+  currentAngle = animate(currentAngle)
+  draw()
+}
+tick()
