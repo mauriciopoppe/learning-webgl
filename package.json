@@ -12,13 +12,16 @@
   "license": "MIT",
   "dependencies": {
     "babelify": "^6.1.3",
+    "beefy": "^2.1.5",
+    "brfs": "^1.4.1",
+    "browser-menu": "^1.0.1",
     "browserify": "^11.0.0",
     "chokidar": "^1.0.5",
     "ecstatic": "^0.8.0",
+    "file-exists": "^0.1.1",
     "gl-matrix": "^2.3.1",
-    "glob": "^5.0.14",
+    "http-hash-router": "^1.1.0",
     "inject-lr-script": "^1.0.1",
-    "npm-execspawn": "^1.2.0",
     "routes-router": "^4.1.2",
     "standard": "^4.5.4",
     "tiny-lr": "^0.1.6"
